@@ -1,0 +1,57 @@
+{
+  "collections": {
+    "sermons": {
+      "name": "Sermons",
+      "path": "src/content/sermons",
+      "fields": [
+        { "name": "title", "label": "Title", "type": "string", "required": true },
+        { "name": "date", "label": "Date", "type": "date", "required": true },
+        { "name": "speaker", "label": "Speaker", "type": "string" },
+        { "name": "topic", "label": "Topic", "type": "string" },
+        { "name": "series", "label": "Series", "type": "string" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "tags", "label": "Tags (comma separated)", "type": "string" },
+        { "name": "body", "label": "Content (Markdown)", "type": "markdown", "isBody": true }
+      ]
+    },
+    "audio": {
+      "name": "Audio",
+      "path": "src/content/audio",
+      "fields": [
+        { "name": "title", "label": "Title", "type": "string", "required": true },
+        { "name": "date", "label": "Date", "type": "date", "required": true },
+        { "name": "duration", "label": "Duration (MM:SS)", "type": "string" },
+        { "name": "speaker", "label": "Speaker", "type": "string" },
+        { "name": "audioFile", "label": "Audio File", "type": "file", "accept": "audio/*" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "tags", "label": "Tags (comma separated)", "type": "string" },
+        { "name": "body", "label": "Transcript (Markdown)", "type": "markdown", "isBody": true }
+      ]
+    },
+    "videos": {
+      "name": "Videos",
+      "path": "src/content/videos",
+      "fields": [
+        { "name": "title", "label": "Title", "type": "string", "required": true },
+        { "name": "date", "label": "Date", "type": "date", "required": true },
+        { "name": "youtubeId", "label": "YouTube Video ID", "type": "string", "required": true },
+        { "name": "duration", "label": "Duration (MM:SS)", "type": "string" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "tags", "label": "Tags (comma separated)", "type": "string" },
+        { "name": "body", "label": "Summary (Markdown)", "type": "markdown", "isBody": true }
+      ]
+    },
+    "images": {
+      "name": "Images",
+      "path": "src/content/images",
+      "fields": [
+        { "name": "title", "label": "Title", "type": "string", "required": true },
+        { "name": "date", "label": "Date", "type": "date", "required": true },
+        { "name": "location", "label": "Location", "type": "string" },
+        { "name": "description", "label": "Description", "type": "text" },
+        { "name": "tags", "label": "Tags (comma separated)", "type": "string" },
+        { "name": "body", "label": "Reflections (Markdown)", "type": "markdown", "isBody": true }
+      ]
+    }
+  }
+}

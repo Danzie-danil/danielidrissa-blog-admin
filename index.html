@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daniel Idrissa Admin Dashboard</title>
+  <link rel="stylesheet" href="./css/admin.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+</head>
+<body class="admin-shell">
+  
+  <!-- Login Overlay -->
+  <div id="login-overlay" class="admin-login-overlay" style="display: none;">
+    <div class="admin-login-card">
+      <h2 class="mb-lg">Admin Login</h2>
+      <p class="mb-lg" style="color: #666">Enter your GitHub credentials to manage the blog content.</p>
+      <div class="admin-form-group">
+        <input type="text" id="github-owner" class="admin-input" placeholder="GitHub Username (e.g., danielidrissa)">
+      </div>
+      <div class="admin-form-group">
+        <input type="text" id="github-repo" class="admin-input" placeholder="Repo Name (e.g., my-website)">
+      </div>
+      <div class="admin-form-group">
+        <input type="password" id="github-token" class="admin-input" placeholder="GitHub Personal Access Token">
+      </div>
+      <button id="login-btn" class="btn btn-primary w-full">Sign In</button>
+      <p class="mt-lg"><small><a href="https://github.com/settings/tokens" target="_blank" class="text-accent">Create a token on GitHub</a></small></p>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="site-logo mb-xl">Admin <span class="text-accent">Portal</span></div>
+    
+    <nav class="admin-nav" id="admin-nav">
+      <div class="admin-nav-item is-active" data-section="dashboard">
+        <span>Dashboard</span>
+      </div>
+      <div class="admin-nav-item" data-section="sermons">
+        <span>Sermons</span>
+      </div>
+      <div class="admin-nav-item" data-section="audio">
+        <span>Audio</span>
+      </div>
+      <div class="admin-nav-item" data-section="videos">
+        <span>Videos</span>
+      </div>
+      <div class="admin-nav-item" data-section="images">
+        <span>Images</span>
+      </div>
+    </nav>
+
+    <div style="margin-top: auto;">
+      <button id="logout-btn" class="btn btn-secondary w-full">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="admin-main">
+    <div id="admin-content"></div>
+  </main>
+
+  <!-- Toast Notifications -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>
