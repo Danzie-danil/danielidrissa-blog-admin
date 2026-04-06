@@ -7,8 +7,8 @@
 let CONFIG = null;
 let AUTH = {
   token: localStorage.getItem('gh_token'),
-  owner: localStorage.getItem('gh_owner'),
-  repo: localStorage.getItem('gh_repo')
+  owner: localStorage.getItem('gh_owner') || 'Danzie-danil',
+  repo: localStorage.getItem('gh_repo') || 'danielidrissa-blog'
 };
 
 // Initial Setup
