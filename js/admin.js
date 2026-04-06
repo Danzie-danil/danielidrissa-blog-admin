@@ -43,9 +43,22 @@ function checkAuth() {
 function setupEventListeners() {
   // Login
   document.getElementById('login-btn').addEventListener('click', () => {
-    const token = document.getElementById('github-token').value;
-    const owner = document.getElementById('github-owner').value;
-    const repo = document.getElementById('github-repo').value;
+    let token = document.getElementById('github-token').value.trim();
+    let owner = document.getElementById('github-owner').value.trim();
+    let repo = document.getElementById('github-repo').value.trim();
+
+    // Sanitize: If a full URL is pasted, extract the relevant parts
+    if (owner.includes('github.com/')) {
+      const parts = owner.split('github.com/')[1].split('/');
+      owner = parts[0];
+      if (parts[1] && !repo) repo = parts[1];
+    }
+    if (repo.includes('/')) {
+      const parts = repo.split('/');
+      if (parts.length > 1) {
+        repo = parts[parts.length - 1] || parts[parts.length - 2];
+      }
+    }
 
     if (token && owner && repo) {
       localStorage.setItem('gh_token', token);
@@ -56,7 +69,7 @@ function setupEventListeners() {
       loadSection('dashboard');
       showToast('Logged in successfully', 'success');
     } else {
-      showToast('Please fill in all fields', 'error');
+      showToast('Please fill in all fields (Owner and Repo name only)', 'error');
     }
   });
 
@@ -174,7 +187,7 @@ function renderEditor(sectionId, existing = null) {
   
   let html = `
     <div class="admin-header">
-      <h1 class="page-title">${existing ? 'Edit' : 'New'} ${collection.name.slice(0,-1)}</h1>
+      <h1 class="page-title">${existing ? 'Edit' : 'New'} ${collection.singular || collection.name}</h1>
       <div>
         <button class="btn btn-secondary" onclick="loadSection('${sectionId}')">Cancel</button>
         <button class="btn btn-primary" id="save-btn">Save Content</button>
@@ -190,7 +203,7 @@ function renderEditor(sectionId, existing = null) {
     if (field.type === 'text' || field.type === 'markdown') {
       html += `<textarea id="field-${field.name}" class="admin-textarea">${value}</textarea>`;
     } else if (field.type === 'file') {
-      html += `<input type="file" id="field-${field.name}" class="admin-input">`;
+      html += `<input type="file" id="field-${field.name}" class="admin-input" accept="${field.accept || ''}">`;
     } else {
       html += `<input type="${field.type}" id="field-${field.name}" class="admin-input" value="${value}">`;
     }
@@ -214,11 +227,17 @@ async function saveItem(sectionId, existing) {
     } else if (field.type === 'file' && input.files[0]) {
       const file = input.files[0];
       const assetPath = `src/assets/uploads/${file.name}`;
+      showToast(`Uploading ${file.name}...`, 'info');
       await uploadFile(assetPath, file);
       formData[field.name] = `/assets/uploads/${file.name}`;
     } else {
       formData[field.name] = input.value;
     }
+  }
+  
+  // Automatically add date if missing from the form but intended for the frontmatter
+  if (!formData.date && !collection.fields.find(f => f.name === 'date')) {
+    formData.date = new Date().toISOString().split('T')[0];
   }
 
   const frontmatter = jsyaml.dump(formData);
